@@ -10,6 +10,9 @@ int main() {
     std::cout << "$ ";
     std::string command;
     getline(std::cin, command);
+    if (command == "exit") {
+      break;
+    }
     cout << format("{}: command not found", command) << endl;
   }
 
