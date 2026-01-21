@@ -7,13 +7,19 @@ int main() {
   std::cerr << std::unitbuf;
 
   while(true) {
-    std::cout << "$ ";
-    std::string command;
+    cout << "$ ";
+    string command;
     getline(std::cin, command);
+
     if (command == "exit") {
       break;
+    } else if (command.size() > 4 && command.substr(0, 4) == "echo") {
+      cout << command.substr(5, command.size() - 5) << endl;
+      continue;
     }
-    cout << format("{}: command not found", command) << endl;
+    
+
+    cout << command + ": command not found" << endl;
   }
 
 }
