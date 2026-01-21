@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 int main() {
@@ -8,18 +9,30 @@ int main() {
 
   while(true) {
     cout << "$ ";
-    string command;
-    getline(std::cin, command);
+    string simple_command;
+    getline(std::cin, simple_command);
 
-    if (command == "exit") {
+    size_t cmd_index = simple_command.find(' ');
+    string cmd = simple_command.substr(0, cmd_index);
+
+    if (cmd == "exit") {
       break;
-    } else if (command.size() > 4 && command.substr(0, 4) == "echo") {
-      cout << command.substr(5, command.size() - 5) << endl;
+    } 
+    else if (cmd == "type") {
+      string arg = simple_command.substr(cmd_index + 1);
+      if (arg == "echo" || arg == "exit" || arg == "type") {
+        cout << arg + " is a shell builtin" << endl;
+      } else {
+        cout << arg + ": not found" << endl;
+      }
+      continue;
+    } 
+    else if (cmd == "echo") {
+      cout << simple_command.substr(5, simple_command.size() - 5) << endl;
       continue;
     }
     
-
-    cout << command + ": command not found" << endl;
+    cout << simple_command + ": command not found" << endl;
   }
 
 }
